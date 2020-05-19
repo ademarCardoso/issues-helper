@@ -1,6 +1,6 @@
 <template>
-  <div class="hello">
-    <Repository :data="response"/>
+  <div class="container">
+    <Repository :source="response"/>
   </div>
 </template>
 
