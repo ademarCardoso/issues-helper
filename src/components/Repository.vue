@@ -4,7 +4,7 @@
       <a :href="source.html_url"
          :title="'Repository ' + source.name"
          class="title is-2"
-         target="_blank">{{source.name}}
+         target="_blank">{{source.name.split('')[0].toUpperCase() + source.name.substr(1)}}
       </a>
       <div>
         <button class="button is-primary is-active"
@@ -65,4 +65,7 @@ export default {
   border-radius: 10px;
 }
 
+section button {
+  margin-top: 10px;
+}
 </style>
