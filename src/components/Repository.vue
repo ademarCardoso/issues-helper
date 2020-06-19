@@ -1,8 +1,18 @@
 <template>
   <div>
-    <section v-for="(item, index) in source" :key="index" class="section content">
-      <a :href="item.html_url" :title="'Repository ' + item.name" class="title">{{item.name}}</a>
-      <button @click="getIssues(index)">get</button>
+    <section class="section content list-of-repository" >
+      <a :href="source.html_url"
+         :title="'Repository ' + source.name"
+         class="title is-2"
+         target="_blank">{{source.name}}
+      </a>
+      <div>
+        <button class="button is-primary is-active"
+                :class="{'is-loading': loading !== false}"
+                @click="getIssues(source.name)">
+                Load {{source.open_issues_count}} issues
+        </button>
+      </div>
       <Issues :issuesSource="issues" />
     </section>
   </div>
@@ -23,20 +33,26 @@ export default {
       required: true,
       type: Object,
       default: () => {}
+    },
+    id: {
+      required: true,
+      type: Number,
+      default: () => 0
     }
   },
 
   data() {
     return {
-      issues: []
+      issues: [],
+      loading: false
     }
   },
 
   methods: {
-    async getIssues(index) {
-      let dataProp = {...this.source}
-
-      this.issues = await getAllIssuesFromRepo(dataProp[index].name)
+    async getIssues() {
+      this.loading = true
+      this.issues = await getAllIssuesFromRepo(this.source.name)
+      this.loading = false
       return
     }
   }
@@ -44,5 +60,9 @@ export default {
 </script>
 
 <style>
+.list-of-repository {
+  box-shadow: 0px 0px 20px -14px rgba(0,0,0,0.74);
+  border-radius: 10px;
+}
 
 </style>

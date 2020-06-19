@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    <Repository :source="response"/>
+    <section v-for="(item, index) in response" :key="index">
+       <Repository :source="item" :id="index"/>
+    </section>
   </div>
 </template>
 
@@ -13,20 +15,28 @@ export default {
     Repository
   },
 
-  props: {
-    msg: String
-  },
-
   data() {
     return {
-      response: {}
+      response: []
     }
   },
 
   methods: {
     async getInfo() {
       let data = await getAllReposFromGitHub() || {}
-      this.response = data.filter( elem => elem.open_issues ? elem : '' )
+      this.response = data.filter(elem => {
+        if (elem.open_issues) {
+          return {
+            name: elem.name,
+            desc: elem.description,
+            url: elem.html_url,
+            lang: elem.language,
+            created: elem.created_at,
+            issues: []
+          }
+        }
+      })
+      console.log(this.response)
       return 
     }
   },
