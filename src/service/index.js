@@ -1,5 +1,5 @@
 import axios from 'axios'
-const url = 'https://api.github.com/users/storyblok/repos?per_page=1000'
+const url = 'https://api.github.com/users/storyblok/repos?per_page=200'
 
 export const getAllReposFromGitHub = async () => {
   return await axios.get(url)
