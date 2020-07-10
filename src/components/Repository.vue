@@ -9,23 +9,30 @@
       <div>
         <button class="button is-primary is-active"
                 :class="{'is-loading': loading !== false}"
-                @click="getIssues(source.name)">
-                Load {{source.open_issues_count}} issues
+                @click="get(source.name)">
+                <span v-if="types === 'is' || types === ''">Load {{source.open_issues_count}} issues</span>
+                <span v-else>Load Pull Requests</span>
         </button>
       </div>
-      <Issues :issuesSource="issues" />
+      <Issues :issuesSource="issues" v-if="types === 'is'"/>
+      <PullRequests :pullsSource="prs" v-else/>
+      <section v-if="showMessage">
+        This repository has no open Pull Requests
+      </section>
     </section>
   </div>
 </template>
 
 <script>
-import { getAllIssuesFromRepo } from '../service/index'
+import { getAllIssuesFromRepo, getAllPrsFromRepo } from '../service/index'
 import Issues from './Issues'
+import PullRequests from './PullRequests'
 export default {
   name: "Repository",
 
   components: {
-    Issues
+    Issues,
+    PullRequests
   },
 
   props: {
@@ -38,20 +45,36 @@ export default {
       required: true,
       type: Number,
       default: () => 0
+    },
+    types: {
+      required: true,
+      type: String,
+      default: () => ''
     }
   },
 
   data() {
     return {
       issues: [],
-      loading: false
+      loading: false,
+      prs: [],
+      showMessage: false
     }
   },
 
   methods: {
-    async getIssues() {
+    async get() {
       this.loading = true
-      this.issues = await getAllIssuesFromRepo(this.source.name)
+      
+      if(this.types === 'is' || this.types === '' || this.types === undefined) {
+        this.issues = await getAllIssuesFromRepo(this.source.name)
+      }
+
+      this.prs = await getAllPrsFromRepo(this.source.name) || []
+      if (!this.prs.length) {
+        this.showMessage = true
+      }
+
       this.loading = false
       return
     }
