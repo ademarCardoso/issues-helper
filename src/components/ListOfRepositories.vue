@@ -49,7 +49,7 @@ export default {
           }
         }
       })
-      console.log(this.response)
+      this.$emit('show-repos', false)
       return 
     },
 

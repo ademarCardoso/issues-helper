@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="section content list-of-repository" >
+    <section class="section content list-of-repository">
       <a :href="source.html_url"
          :title="'Repository ' + source.name"
          class="title is-2"
@@ -9,15 +9,16 @@
       <div>
         <button class="button is-primary is-active"
                 :class="{'is-loading': loading !== false}"
-                @click="get(source.name)">
+                @click="get(source.name)"
+                v-if="!(showMessage && types === 'pr')">
                 <span v-if="types === 'is' || types === ''">Load {{source.open_issues_count}} issues</span>
                 <span v-else>Load Pull Requests</span>
         </button>
       </div>
       <Issues :issuesSource="issues" v-if="types === 'is'"/>
       <PullRequests :pullsSource="prs" v-else/>
-      <section v-if="showMessage">
-        This repository has no open Pull Requests
+      <section v-if="showMessage && types === 'pr'">
+        <strong> This repository has no open Pull Requests. </strong>
       </section>
     </section>
   </div>
@@ -28,7 +29,7 @@ import { getAllIssuesFromRepo, getAllPrsFromRepo } from '../service/index'
 import Issues from './Issues'
 import PullRequests from './PullRequests'
 export default {
-  name: "Repository",
+  name: 'Repository',
 
   components: {
     Issues,
@@ -91,4 +92,5 @@ export default {
 section button {
   margin-top: 10px;
 }
+
 </style>
