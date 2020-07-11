@@ -4,25 +4,29 @@
       <img alt="Stroyblok logo" src="./assets/logo.png">
     </div>
     <Select v-on:update-filter="sendFilter" v-on:update-type="sendType"/>
-    <ListOfRepositories :filter="filterId" :type="typeId"/>
+    <Loading v-if="isLoading"/>
+    <ListOfRepositories :filter="filterId" :type="typeId" v-on:show-repos="changeLoading"/>
   </div>
 </template>
 
 <script>
-import ListOfRepositories from './components/ListOfRepositories.vue'
 import Select from './components/Select.vue'
+import Loading from './components/Loading.vue'
+import ListOfRepositories from './components/ListOfRepositories.vue'
 
 export default {
   name: 'App',
   components: {
-    ListOfRepositories,
-    Select
+    Select,
+    Loading,
+    ListOfRepositories
   },
 
   data() {
     return {
       filterId: '',
-      typeId: ''
+      typeId: '',
+      isLoading: true
     }
   },
 
@@ -33,6 +37,10 @@ export default {
 
     sendType(val) {
       this.typeId = val
+    },
+
+    changeLoading(val) {
+      this.isLoading = val
     }
   }
 
@@ -44,6 +52,7 @@ export default {
   margin: 0 auto;
   width: 80%;
 }
+
 #app img {
   margin-top: 20px;
   width: 50%;
