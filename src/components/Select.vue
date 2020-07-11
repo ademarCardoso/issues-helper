@@ -5,7 +5,8 @@
       <p class="select__container--title">Sort By:</p>
       <div class="select">
         <select name="time" id="time" v-model="filter">
-          <option disabled value="">Please select one</option>
+          <option disabled>Please select one</option>
+          <option value="default">Default</option>
           <option value="+">More Issues</option>
           <option value="-">Less Issues</option>
         </select>
@@ -32,7 +33,7 @@ export default {
 
   data() {
     return {
-      filter: '+',
+      filter: 'default',
       type: 'is',
     }
   },
