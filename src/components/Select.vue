@@ -6,21 +6,19 @@
       <div class="select">
         <select name="time" id="time" v-model="filter">
           <option disabled value="">Please select one</option>
-          <option v-for="time in timeFilter" :key="time.id" :value="time.id">
-            {{ time.title }}
-          </option>
+          <option value="+">More Issues</option>
+          <option value="-">Less Issues</option>
         </select>
       </div>
     </div>
 
     <div class="select__container--label">
-      <p class="select__container--title">Select</p>
+      <p class="select__container--title">Show</p>
       <div class="select">
         <select name="type" id="type" v-model="type">
           <option disabled value="">Please select one</option>
-          <option v-for="type in typeFilter" :key="type.id" :value="type.id">
-            {{ type.title }}
-          </option>
+          <option value="is">Issues</option>
+          <option value="pr">Pull Requests</option>
         </select>
       </div>
     </div>
@@ -34,16 +32,8 @@ export default {
 
   data() {
     return {
-      filter: 'nw',
+      filter: '+',
       type: 'is',
-      timeFilter: [
-        {title: 'More Issues', id: '+'},
-        {title: 'Less Issues', id: '-'}
-      ],
-      typeFilter: [
-        {title: 'Issues', id: 'is'},
-        {title: 'Pull Requests', id: 'pr'}
-      ]
     }
   },
 
@@ -74,5 +64,9 @@ export default {
 .select__container--title {
   margin: 8px;
   font-weight: bold;
+}
+
+.select #time, .select #type {
+  font-weight: 600;
 }
 </style>
