@@ -22,7 +22,18 @@ export default {
     }
   },
 
-  props: ['filter', 'type'],
+  props: {
+    filter: {
+      required: true,
+      type: String,
+      default: () => ''
+    },
+    type: {
+      required: true,
+      type: String,
+      default: () => 'is'
+    }
+  },
 
   watch: {
     filter: function() {
@@ -56,14 +67,15 @@ export default {
     filterByDate(val) {
       if (val === '+') {
         this.response.sort((a, b) => { 
-        if (a.open_issues_count > b.open_issues_count) {
-          return -1;
-        }
-        if (a.open_issues_count < b.open_issues_count) {
-          return 1;
-        }
-        return 0
+          if (a.open_issues_count > b.open_issues_count) {
+            return -1;
+          }
+          if (a.open_issues_count < b.open_issues_count) {
+            return 1;
+          }
+          return 0
         })
+
         return
       }
 
@@ -75,7 +87,7 @@ export default {
           return -1;
         }
           return 0
-        })
+      })
 
         return
     },

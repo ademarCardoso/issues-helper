@@ -15,7 +15,7 @@
                 <span v-else>Load Pull Requests</span>
         </button>
       </div>
-      <Issues :issuesSource="issues" v-if="types === 'is'"/>
+      <Issues :issuesSource="issues" v-if="types === 'is' || types === ''"/>
       <PullRequests :pullsSource="prs" v-else/>
       <section v-if="showMessage && types === 'pr'">
         <strong> This repository has no open Pull Requests. </strong>
@@ -50,7 +50,7 @@ export default {
     types: {
       required: true,
       type: String,
-      default: () => ''
+      default: () => 'is'
     }
   },
 
