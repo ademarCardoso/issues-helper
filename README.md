@@ -7,7 +7,7 @@
 
 This is a project to centralize open issues and pull requests for the **Storyblok team** to have greater control of `Issues` and open `PR's`, thus being able to better respond to the incredible open source community :)
 
-[Link for the site]() :rocket:	
+[Link for the site](http://storyblok-issues-helper.surge.sh/) :rocket:	
 
 ## How to run this project
 

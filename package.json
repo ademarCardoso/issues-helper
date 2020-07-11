@@ -1,15 +1,16 @@
 {
   "name": "issues-viewer",
   "version": "0.1.0",
+  "description": "Site for viewing issues and pull requests",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
+  "author": "Ademar Cardoso <ac@storyblok.com>",
   "dependencies": {
     "axios": "^0.19.2",
-    "bulma": "^0.8.2",
     "core-js": "^3.6.4",
     "moment": "^2.27.0",
     "vue": "^2.6.11"
