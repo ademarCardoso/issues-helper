@@ -1,10 +1,9 @@
 <template>
   <div>
-    <section class="issue" v-for="(issue, index) in issuesSource" :key="index">
+    <section class="issue" v-for="(issue, index) in issuesSource" :key="index" v-show="isFakeIssue(index)">
       <a :href="issue.html_url" target="_blank" class="title is-4">{{issue.title}}</a>
-      <p class="subtitle__date">{{ timeAgo(issue.created_at) }}</p>
-      <p class="subtitle is-6">{{issue.body}}</p>
-      
+      <p class="subtitle__date">{{ time(issue.created_at) }}</p>
+      <p class="subtitle is-6" style="display: block; width: 80%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{issue.body}}</p>
       <div>
         <span class="tag" 
               v-for="label in issue.labels"
@@ -12,16 +11,15 @@
               v-bind:style="{'background-color': `#${label.color}`}">{{label.name}}
         </span>
       </div>
-
       <p>By {{issue.user.login}}</p>
     </section>
   </div>
 </template>
 
 <script>
-import moment from 'moment'
+import { timeAgo } from '../utils/index'
 export default {
-  name: "Issues",
+  name: 'Issues',
 
   props: {
     issuesSource: {
@@ -30,10 +28,24 @@ export default {
       default: () => []
     }
   },
-  
+
   methods: {
-    timeAgo(date) {
-      return moment(date).startOf('day').fromNow();
+    time(date) {
+      return timeAgo(date)
+    },
+
+    // This function was created because github identifies some pull requests as issues
+    isFakeIssue(index) {
+      let keysOfObject = Object.keys(this.issuesSource[index])
+
+      const equal = (element) => element === 'pull_request'
+
+      if (keysOfObject.some(equal)) {
+        return false
+      }
+
+      return true
+      
     }
   }
 }
@@ -43,6 +55,10 @@ export default {
 .subtitle__date {
   display: inline;
   float: right;
+}
+
+section {
+  margin-top: 20px;
 }
 
 .issue {

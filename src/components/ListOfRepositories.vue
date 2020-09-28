@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <section v-for="(item, index) in response" :key="index">
-       <Repository :source="item" :id="index"/>
+       <Repository :source="item" :id="index" :types="typeOfSearch"/>
     </section>
   </div>
 </template>
@@ -17,8 +17,32 @@ export default {
 
   data() {
     return {
-      response: []
+      response: [],
+      typeOfSearch: ''
     }
+  },
+
+  props: {
+    filter: {
+      required: true,
+      type: String,
+      default: () => ''
+    },
+    type: {
+      required: true,
+      type: String,
+      default: () => 'is'
+    }
+  },
+
+  watch: {
+    filter: function() {
+      this.filterByDate(this.filter)
+    },
+
+    type: function() {
+      this.filterByType(this.type)
+    } 
   },
 
   methods: {
@@ -36,8 +60,40 @@ export default {
           }
         }
       })
-      console.log(this.response)
+      this.$emit('show-repos', false)
       return 
+    },
+
+    filterByDate(val) {
+      if (val === '+') {
+        this.response.sort((a, b) => { 
+          if (a.open_issues_count > b.open_issues_count) {
+            return -1;
+          }
+          if (a.open_issues_count < b.open_issues_count) {
+            return 1;
+          }
+          return 0
+        })
+
+        return
+      }
+
+      this.response.sort((a, b) => { 
+        if (a.open_issues_count > b.open_issues_count) {
+          return 1;
+        }
+        if (a.open_issues_count < b.open_issues_count) {
+          return -1;
+        }
+          return 0
+      })
+
+        return
+    },
+
+    filterByType(val) {
+      this.typeOfSearch = val
     }
   },
 

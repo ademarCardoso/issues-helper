@@ -21,3 +21,14 @@ export const getAllIssuesFromRepo = async (repo) => {
       console.log(error)
     })
 }
+
+export const getAllPrsFromRepo = async (repo) => {
+  let urlToGetPrs = `https://api.github.com/repos/storyblok/${repo}/pulls`
+  return await axios.get(urlToGetPrs)
+    .then(function (response) {
+      return response.data
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
+}
