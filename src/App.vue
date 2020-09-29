@@ -4,14 +4,15 @@
       <img alt="Stroyblok logo" src="./assets/logo.png">
     </div>
     <Select v-on:update-filter="sendFilter" v-on:update-type="sendType"/>
-    <Loading v-if="isLoading"/>
-    <ListOfRepositories :filter="filterId" :type="typeId" v-on:show-repos="changeLoading"/>
+    <Loading v-if="!contentRepositories"/>
+    <ListOfRepositories :json-data="contentRepositories" :filter="filterId" :type="typeId" v-on:show-repos="changeLoading"/>
   </div>
 </template>
 
 <script>
 import Select from './components/Select.vue'
 import Loading from './components/Loading.vue'
+import dataFromJson from '../scripts/crawler-repositories/data/repositories.json'
 import ListOfRepositories from './components/ListOfRepositories.vue'
 
 export default {
@@ -24,6 +25,7 @@ export default {
 
   data() {
     return {
+      contentRepositories: dataFromJson,
       filterId: '',
       typeId: '',
       isLoading: true
@@ -41,7 +43,11 @@ export default {
 
     changeLoading(val) {
       this.isLoading = val
-    }
+    },
+    // async loadFiles () {
+    //   return await loadRepositoriesJson()
+    //   // console.log(content)
+    // }
   }
 
 }

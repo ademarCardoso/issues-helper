@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { getAllReposFromGitHub } from '../service/index'
+// import { getAllReposFromGitHub } from '../service/index'
 import Repository from './Repository'
 export default {
   name: 'ListOfRepositories',
@@ -17,7 +17,7 @@ export default {
 
   data() {
     return {
-      response: [],
+      response: this.jsonData,
       typeOfSearch: ''
     }
   },
@@ -32,6 +32,9 @@ export default {
       required: true,
       type: String,
       default: () => 'is'
+    },
+    jsonData: {
+      type: Array
     }
   },
 
@@ -45,24 +48,28 @@ export default {
     } 
   },
 
+  // created() {
+  //   this.response = this.jsonData
+  // },
+
   methods: {
-    async getInfo() {
-      let data = await getAllReposFromGitHub() || {}
-      this.response = data.filter(elem => {
-        if (elem.open_issues) {
-          return {
-            name: elem.name,
-            desc: elem.description,
-            url: elem.html_url,
-            lang: elem.language,
-            created: elem.created_at,
-            issues: []
-          }
-        }
-      })
-      this.$emit('show-repos', false)
-      return 
-    },
+    // async getInfo() {
+    //   let data = await getAllReposFromGitHub() || {}
+    //   this.response = data.filter(elem => {
+    //     if (elem.open_issues) {
+    //       return {
+    //         name: elem.name,
+    //         desc: elem.description,
+    //         url: elem.html_url,
+    //         lang: elem.language,
+    //         created: elem.created_at,
+    //         issues: []
+    //       }
+    //     }
+    //   })
+    //   this.$emit('show-repos', false)
+    //   return 
+    // },
 
     filterByDate(val) {
       if (val === '+') {
@@ -97,9 +104,9 @@ export default {
     }
   },
 
-  mounted() {
-    this.getInfo()
-  }
+  // mounted() {
+  //   this.getInfo()
+  // }
 }
 </script>
 
