@@ -1,26 +1,31 @@
 <template>
   <div id="app">
     <div class="image-header">
-      <img alt="Stroyblok logo" src="./assets/logo.png">
+      <img alt="Stroyblok logo" src="./assets/logo.png" />
     </div>
-    <Select v-on:update-filter="sendFilter" v-on:update-type="sendType"/>
-    <Loading v-if="!contentRepositories"/>
-    <ListOfRepositories :json-data="contentRepositories" :filter="filterId" :type="typeId" v-on:show-repos="changeLoading"/>
+    <Select v-on:update-filter="sendFilter" v-on:update-type="sendType" />
+    <Loading v-if="!contentRepositories" />
+    <ListOfRepositories
+      :json-data="contentRepositories"
+      :filter="filterId"
+      :type="typeId"
+      v-on:show-repos="changeLoading"
+    />
   </div>
 </template>
 
 <script>
-import Select from './components/Select.vue'
-import Loading from './components/Loading.vue'
+import Select from './components/Select.vue';
+import Loading from './components/Loading.vue';
 import dataFromJson from '../scripts/crawler-repositories/data/repositories.json'
-import ListOfRepositories from './components/ListOfRepositories.vue'
+import ListOfRepositories from './components/ListOfRepositories.vue';
 
 export default {
   name: 'App',
   components: {
     Select,
     Loading,
-    ListOfRepositories
+    ListOfRepositories,
   },
 
   data() {
@@ -28,29 +33,28 @@ export default {
       contentRepositories: dataFromJson,
       filterId: '',
       typeId: '',
-      isLoading: true
-    }
+      isLoading: true,
+    };
   },
 
   methods: {
     sendFilter(val) {
-      this.filterId = val
+      this.filterId = val;
     },
 
     sendType(val) {
-      this.typeId = val
+      this.typeId = val;
     },
 
     changeLoading(val) {
-      this.isLoading = val
+      this.isLoading = val;
     },
     // async loadFiles () {
     //   return await loadRepositoriesJson()
     //   // console.log(content)
     // }
-  }
-
-}
+  },
+};
 </script>
 
 <style>
@@ -68,5 +72,11 @@ export default {
 .image-header {
   display: flex;
   justify-content: center;
+}
+
+@media only screen and (max-width: 425px) {
+  #app {
+    width: 90%;
+  }
 }
 </style>
