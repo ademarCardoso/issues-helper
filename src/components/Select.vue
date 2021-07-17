@@ -1,6 +1,5 @@
 <template>
   <section class="select__container section content">
-
     <div class="select__container--label">
       <p class="select__container--title">Sort By:</p>
       <div class="select">
@@ -23,7 +22,6 @@
         </select>
       </div>
     </div>
-
   </section>
 </template>
 
@@ -35,26 +33,26 @@ export default {
     return {
       filter: 'default',
       type: 'is',
-    }
+    };
   },
 
   watch: {
     filter: function () {
-      this.$emit('update-filter', this.filter)
+      this.$emit('update-filter', this.filter);
     },
 
     type: function () {
-      this.$emit('update-type', this.type)
-    }
-  }
-
-}
+      this.$emit('update-type', this.type);
+    },
+  },
+};
 </script>
 
 <style>
 .select__container {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .select__container--label {
@@ -63,11 +61,42 @@ export default {
 }
 
 .select__container--title {
-  margin: 8px;
+  margin: 8px 8px 8px 0 !important;
   font-weight: bold;
 }
 
-.select #time, .select #type {
+.select #time,
+.select #type {
   font-weight: 600;
+}
+
+@media only screen and (max-width: 425px) {
+  .select__container {
+    margin: 0 !important;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .select__container--label:first-child {
+    margin-bottom: 8px;
+  }
+
+  .select #time,
+  .select #type {
+    width: 100%;
+    margin: 0;
+  }
+
+  .select__container--label {
+    width: 100%;
+  }
+
+  [class*='select__container--'] + p {
+    width: 25%;
+  }
+
+  [class*='select__container--'] + .select {
+    width: 75%;
+  }
 }
 </style>
